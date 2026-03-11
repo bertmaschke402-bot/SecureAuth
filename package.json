@@ -1,0 +1,12 @@
+{
+  "name": "roblox-quick-login",
+  "version": "1.0.0",
+  "description": "Roblox Quick Login Verification System",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
